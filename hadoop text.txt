@@ -1,0 +1,258 @@
+Microsoft Windows [Version 10.0.26100.3476]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\CSE>docker --version
+Docker version 24.0.7, build afdd53b
+
+C:\Users\CSE>git clone https://github.com/big-data-europe/docker-hadoop.git
+Cloning into 'docker-hadoop'...
+remote: Enumerating objects: 539, done.
+remote: Counting objects: 100% (189/189), done.
+remote: Compressing objects: 100% (23/23), done.
+Rremote: Total 539 (delta 169), reused 166 (delta 166), pack-reused 350 (from 1)
+Receiving objects: 100% (539/539), 108.00 KiB | 1.77 MiB/s, done.
+Resolving deltas: 100% (251/251), done.
+
+C:\Users\CSE>cd docker-hadoop
+
+C:\Users\CSE\docker-hadoop>ls
+'ls' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\CSE\docker-hadoop>docker-compose up -d
+[+] Running 28/28
+ ✔ datanode 3 layers [⣿⣿⣿]      0B/0B      Pulled                                                                 83.3s
+   ✔ 3ca2ec07878c Pull complete                                                                                   53.2s
+   ✔ 26c2dd45430e Pull complete                                                                                   53.2s
+   ✔ 13c9c87a46cb Pull complete                                                                                   54.0s
+ ✔ resourcemanager 2 layers [⣿⣿]      0B/0B      Pulled                                                           83.3s
+   ✔ b0d764123f3e Pull complete                                                                                   53.4s
+   ✔ b04394ddb35d Pull complete                                                                                   53.3s
+ ✔ historyserver 3 layers [⣿⣿⣿]      0B/0B      Pulled                                                            83.3s
+   ✔ b2dc88cebe05 Pull complete                                                                                   52.3s
+   ✔ 13b908760168 Pull complete                                                                                   51.3s
+   ✔ 0991d53828a1 Pull complete                                                                                   53.6s
+ ✔ nodemanager1 12 layers [⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿]      0B/0B      Pulled                                                   83.2s
+   ✔ 3192219afd04 Pull complete                                                                                   20.0s
+   ✔ 7127a1d8cced Pull complete                                                                                   54.5s
+   ✔ 883a89599900 Pull complete                                                                                    1.3s
+   ✔ 77920a3e82af Pull complete                                                                                    2.7s
+   ✔ 92329e81aec4 Pull complete                                                                                   71.3s
+   ✔ f373218fec59 Pull complete                                                                                   22.7s
+   ✔ aa53513fe997 Pull complete                                                                                   23.7s
+   ✔ 8b1800105b98 Pull complete                                                                                   24.8s
+   ✔ c3a84a3e49c8 Pull complete                                                                                   30.4s
+   ✔ a65640a64a76 Pull complete                                                                                   36.0s
+   ✔ beaa171f32f6 Pull complete                                                                                   40.7s
+   ✔ 50dda04de8a9 Pull complete                                                                                   45.6s
+ ✔ namenode 3 layers [⣿⣿⣿]      0B/0B      Pulled                                                                 83.3s
+   ✔ facffb3a6de3 Pull complete                                                                                   48.1s
+   ✔ c71a6df73788 Pull complete                                                                                   49.2s
+   ✔ 73b8c0ccb707 Pull complete                                                                                   51.5s
+[+] Running 9/9
+ ✔ Network docker-hadoop_default                Created                                                            0.0s
+ ✔ Volume "docker-hadoop_hadoop_datanode"       Created                                                            0.0s
+ ✔ Volume "docker-hadoop_hadoop_historyserver"  Created                                                            0.0s
+ ✔ Volume "docker-hadoop_hadoop_namenode"       Created                                                            0.0s
+ ✔ Container nodemanager                        Started                                                            0.3s
+ ✔ Container resourcemanager                    Started                                                            0.3s
+ ✔ Container historyserver                      Started                                                            0.3s
+ ✔ Container namenode                           Started                                                            0.3s
+ ✔ Container datanode                           Started                                                            0.3s
+
+C:\Users\CSE\docker-hadoop>docker container ls
+CONTAINER ID   IMAGE                                                    COMMAND                  CREATED          STATUS                             PORTS                                            NAMES
+2be664f67bf9   bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8          "/entrypoint.sh /run…"   25 seconds ago   Up 22 seconds (health: starting)   0.0.0.0:9000->9000/tcp, 0.0.0.0:9870->9870/tcp   namenode
+3aed4f20574b   bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8   "/entrypoint.sh /run…"   25 seconds ago   Up 23 seconds (health: starting)   8088/tcp                                         resourcemanager
+3f230b51b996   bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8     "/entrypoint.sh /run…"   25 seconds ago   Up 23 seconds (health: starting)   8188/tcp                                         historyserver
+55872d49f3de   bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8       "/entrypoint.sh /run…"   25 seconds ago   Up 23 seconds (health: starting)   8042/tcp                                         nodemanager
+7cedf2883f6a   bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8          "/entrypoint.sh /run…"   25 seconds ago   Up 23 seconds (health: starting)   9864/tcp                                         datanode
+
+C:\Users\CSE\docker-hadoop>docker exec -it namenode bash
+root@2be664f67bf9:/# hdfs dfs -ls /
+Found 1 items
+drwxr-xr-x   - root supergroup          0 2025-03-26 07:51 /rmstate
+root@2be664f67bf9:/# echo "hadoop mapreduce tutorial">doc1.txt
+root@2be664f67bf9:/#  echo "hadoop tutorial example">doc2.txt
+root@2be664f67bf9:/#  echo "mapreduce example tutorial">doc3.txt
+root@2be664f67bf9:/# hdfs dfs -mkdir /techcore
+root@2be664f67bf9:/# hdfs dfs -ls /
+Found 2 items
+drwxr-xr-x   - root supergroup          0 2025-03-26 07:51 /rmstate
+drwxr-xr-x   - root supergroup          0 2025-03-26 07:55 /techcore
+root@2be664f67bf9:/# hdfs dfs -put doc*.txt /techcore/
+2025-03-26 07:55:43,529 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2025-03-26 07:55:43,654 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2025-03-26 07:55:44,089 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+root@2be664f67bf9:/# hdfs dfs -ls /techcore
+Found 3 items
+-rw-r--r--   3 root supergroup         26 2025-03-26 07:55 /techcore/doc1.txt
+-rw-r--r--   3 root supergroup         24 2025-03-26 07:55 /techcore/doc2.txt
+-rw-r--r--   3 root supergroup         27 2025-03-26 07:55 /techcore/doc3.txt
+root@2be664f67bf9:/# hdfs dfs -ls /techcore/doc*.txt
+-rw-r--r--   3 root supergroup         26 2025-03-26 07:55 /techcore/doc1.txt
+-rw-r--r--   3 root supergroup         24 2025-03-26 07:55 /techcore/doc2.txt
+-rw-r--r--   3 root supergroup         27 2025-03-26 07:55 /techcore/doc3.txt
+root@2be664f67bf9:/# hdfs dfs -cat /techcore/doc*.txt
+2025-03-26 07:56:32,120 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+hadoop mapreduce tutorial
+hadoop tutorial example
+mapreduce example tutorial
+root@2be664f67bf9:/# echo 'import java.io.IOException;
+> import java.util.StringTokenizer;
+> import org.apache.hadoop.conf.Configuration;
+> import org.apache.hadoop.fs.Path;
+> import org.apache.hadoop.io.Text;
+> import org.apache.hadoop.io.LongWritable;
+> import org.apache.hadoop.mapreduce.Job;
+> import org.apache.hadoop.mapreduce.Mapper;
+> import org.apache.hadoop.mapreduce.Reducer;
+> import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+> import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+>
+> public class InvertedIndex {
+>
+>     public static class TokenizerMapper extends Mapper<LongWritable, Text, Text, Text> {
+>         private Text word = new Text();
+>         private Text fileName = new Text();
+>
+>         @Override
+>         protected void setup(Context context) throws IOException, InterruptedException {
+>             String filePath = ((org.apache.hadoop.mapreduce.lib.input.FileSplit) context.getInputSplit()).getPath().getName();
+>             fileName.set(filePath);
+>         }
+>
+>         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+>             StringTokenizer itr = new StringTokenizer(value.toString());
+>             while (itr.hasMoreTokens()) {
+>                 word.set(itr.nextToken().toLowerCase());
+>                 context.write(word, fileName);
+>             }
+>         }
+>     }
+>
+>     public static class IndexReducer extends Reducer<Text, Text, Text, Text> {
+>         public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
+>             StringBuilder fileList = new StringBuilder();
+>             for (Text file : values) {
+>                 if (fileList.length() > 0) {
+>                     fileList.append(", ");
+>                 }
+>                 fileList.append(file.toString());
+>             }
+>             context.write(key, new Text(fileList.toString()));
+>         }
+>     }
+>
+>     public static void main(String[] args) throws Exception {
+>         Configuration conf = new Configuration();
+>         Job job = Job.getInstance(conf, "Inverted Index");
+>         job.setJarByClass(InvertedIndex.class);
+>         job.setMapperClass(TokenizerMapper.class);
+>         job.setReducerClass(IndexReducer.class);
+>         job.setOutputKeyClass(Text.class);
+>         job.setOutputValueClass(Text.class);
+>         FileInputFormat.addInputPath(job, new Path(args[0]));
+>         FileOutputFormat.setOutputPath(job, new Path(args[1]));
+>         System.exit(job.waitForCompletion(true) ? 0 : 1);
+>     }
+> }' > InvertedIndex.java
+root@2be664f67bf9:/# javac -classpath $(hadoop classpath) -d . InvertedIndex.java
+root@2be664f67bf9:/# jar cf invertedindex.jar InvertedIndex*.class
+root@2be664f67bf9:/# hadoop jar invertedindex.jar InvertedIndex /techcore /techcore/output
+2025-03-26 07:58:49,697 INFO client.RMProxy: Connecting to ResourceManager at resourcemanager/172.18.0.5:8032
+2025-03-26 07:58:49,783 INFO client.AHSProxy: Connecting to Application History server at historyserver/172.18.0.4:10200
+2025-03-26 07:58:49,941 WARN mapreduce.JobResourceUploader: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+2025-03-26 07:58:49,961 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1742975474188_0001
+2025-03-26 07:58:50,037 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2025-03-26 07:58:50,113 INFO input.FileInputFormat: Total input files to process : 3
+2025-03-26 07:58:50,139 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2025-03-26 07:58:50,563 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2025-03-26 07:58:50,976 INFO mapreduce.JobSubmitter: number of splits:3
+2025-03-26 07:58:51,044 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2025-03-26 07:58:51,468 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1742975474188_0001
+2025-03-26 07:58:51,468 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2025-03-26 07:58:51,548 INFO conf.Configuration: resource-types.xml not found
+2025-03-26 07:58:51,548 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2025-03-26 07:58:51,989 INFO impl.YarnClientImpl: Submitted application application_1742975474188_0001
+2025-03-26 07:58:52,008 INFO mapreduce.Job: The url to track the job: http://resourcemanager:8088/proxy/application_1742975474188_0001/
+2025-03-26 07:58:52,009 INFO mapreduce.Job: Running job: job_1742975474188_0001
+2025-03-26 07:58:57,058 INFO mapreduce.Job: Job job_1742975474188_0001 running in uber mode : false
+2025-03-26 07:58:57,059 INFO mapreduce.Job:  map 0% reduce 0%
+2025-03-26 07:59:01,096 INFO mapreduce.Job:  map 33% reduce 0%
+2025-03-26 07:59:02,100 INFO mapreduce.Job:  map 67% reduce 0%
+2025-03-26 07:59:03,105 INFO mapreduce.Job:  map 100% reduce 0%
+2025-03-26 07:59:05,119 INFO mapreduce.Job:  map 100% reduce 100%
+2025-03-26 07:59:06,132 INFO mapreduce.Job: Job job_1742975474188_0001 completed successfully
+2025-03-26 07:59:06,172 INFO mapreduce.Job: Counters: 54
+        File System Counters
+                FILE: Number of bytes read=98
+                FILE: Number of bytes written=915678
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=386
+                HDFS: Number of bytes written=120
+                HDFS: Number of read operations=14
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+                HDFS: Number of bytes read erasure-coded=0
+        Job Counters
+                Launched map tasks=3
+                Launched reduce tasks=1
+                Rack-local map tasks=3
+                Total time spent by all maps in occupied slots (ms)=13484
+                Total time spent by all reduces in occupied slots (ms)=9296
+                Total time spent by all map tasks (ms)=3371
+                Total time spent by all reduce tasks (ms)=1162
+                Total vcore-milliseconds taken by all map tasks=3371
+                Total vcore-milliseconds taken by all reduce tasks=1162
+                Total megabyte-milliseconds taken by all map tasks=13807616
+                Total megabyte-milliseconds taken by all reduce tasks=9519104
+        Map-Reduce Framework
+                Map input records=3
+                Map output records=9
+                Map output bytes=158
+                Map output materialized bytes=175
+                Input split bytes=309
+                Combine input records=0
+                Combine output records=0
+                Reduce input groups=4
+                Reduce shuffle bytes=175
+                Reduce input records=9
+                Reduce output records=4
+                Spilled Records=18
+                Shuffled Maps =3
+                Failed Shuffles=0
+                Merged Map outputs=3
+                GC time elapsed (ms)=103
+                CPU time spent (ms)=880
+                Physical memory (bytes) snapshot=1148309504
+                Virtual memory (bytes) snapshot=23927894016
+                Total committed heap usage (bytes)=1047003136
+                Peak Map Physical memory (bytes)=309207040
+                Peak Map Virtual memory (bytes)=5145870336
+                Peak Reduce Physical memory (bytes)=222093312
+                Peak Reduce Virtual memory (bytes)=8492986368
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=77
+        File Output Format Counters
+                Bytes Written=120
+root@2be664f67bf9:/# hdfs dfs -ls /techcore/output
+Found 2 items
+-rw-r--r--   3 root supergroup          0 2025-03-26 07:59 /techcore/output/_SUCCESS
+-rw-r--r--   3 root supergroup        120 2025-03-26 07:59 /techcore/output/part-r-00000
+root@2be664f67bf9:/# hdfs dfs -cat /techcore/output/part-r-00000
+2025-03-26 07:59:50,926 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+example doc2.txt, doc3.txt
+hadoop  doc1.txt, doc2.txt
+mapreduce       doc3.txt, doc1.txt
+tutorial        doc1.txt, doc3.txt, doc2.txt
+root@2be664f67bf9:/#
