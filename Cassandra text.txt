@@ -1,0 +1,85 @@
+docker pull Cassandra
+
+docker run -p 7000:7000 -p 7001:7001 -p 7199:7199 -p 9042:9042 -p 9160:9160 --name cassandra -d cassandra:latest
+
+docker ps
+
+docker exec -it e498593c06eb bash
+
+cqlsh
+
+Buyer Event Analytics:
+
+create keyspace buyer_events with replication = {'class' : 'SimpleStrategy','replication_factor':'1'};\
+
+desc keyspaces
+
+use buyer_events; 
+
+
+Buyers Table:
+
+create table buyers(buyer_id int primary key, username text, email text, address text); 
+
+insert into buyers(buyer_id,username,email,address) values(1,'user1','user1@example.com','hyd'); 
+
+insert into buyers(buyer_id,username,email,address) values(2,'user2','user2@example.com','mum');
+
+
+Products Table:
+
+create table products(product_id int primary key, name text, category text, price int);
+
+insert into products(product_id,name,category,price) values (1, 'coffee maker', 'appliances', 60);
+
+insert into products (product_id, name, category, price) values (2, 'phone', 'electronics', 300); 
+
+
+Purchase History Table
+
+create table purchase_history(transactionID int primary key, buyer_id int, product_id int, quantity int, total_amount int, purchase_date timestamp);
+
+insert into purchase_history(transactionID,buyer_id,product_id,quantity,total_amount,purchase_date) values(2,1,4,4,400,toTimestamp(now())); 
+
+insert into purchase_history(transactionID,buyer_id,product_id,quantity,total_amount,purchase_date) values(3,2,4,1,100,toTimestamp(now())); 
+
+insert into purchase_history(transactionID,buyer_id,product_id,quantity,total_amount,purchase_date) values(4,2,1,3,180,toTimestamp(now()));
+
+
+Queries:
+
+RETRIEVE BUYER’S PURCHASE HISTORY 
+  
+              select * from purchase_history where buyer_id = 1 allow filtering; 
+
+FIND TOTAL NUMBER OF PRODUCTS 
+  
+              select count(product_id) from products; 
+
+RETRIEVE TOTAL SPENDING BY A BUYER 
+  
+              select sum(total_amount) from purchase_history where buyer_id = 2 allow filtering;
+
+
+Social media Analysis:
+
+
+create keyspace social_media with replication = {'class':'SimpleStrategy','replication_factor':1}; 
+use social_media; 
+  
+USERS TABLE : 
+ 
+create table social_media.users(user_id int primary key, username text, email text, registration_date timestamp); 
+  
+INSERTING INTO USERS : 
+
+insert into social_media.users(user_id,username,email,registration_date) values(1,'user1','user1@example.com',toTimestamp(now())); 
+insert into social_media.users(user_id,username,email,registration_date) values(2,'user2','user2@example.com',toTimestamp(now())); 
+insert into social_media.users(user_id,username,email,registration_date) values(3,'user3','user3@example.com',toTimestamp(now())); 
+insert into social_media.users(user_id,username,email,registration_date) values(4,'user4','user4@example.com',toTimestamp(now())); 
+insert into social_media.users(user_id,username,email,registration_date) values(5,'user5','user5@example.com',toTimestamp(now())); 
+
+
+  
+USERS TABLE : 
+select * from users;
