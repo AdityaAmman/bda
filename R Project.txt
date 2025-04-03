@@ -1,0 +1,46 @@
+DA:
+
+dat <- read.csv(file = "C:\\Users\\Dakshith\\Downloads\\Compressed\\Datasets\\inflammation-01.csv", header = FALSE)
+
+head(dat) 
+
+patient_1 <- dat[1, ] 
+
+# max inflammation for patient 1 
+
+max(patient_1) 
+
+max(dat[2, ]) 
+
+min(dat[, 7]) 
+
+mean(dat[, 7])
+
+sd(dat[,7]) 
+
+summary(dat[,1:4]) 
+
+avg_day_inflammation<-apply(dat,2,mean) 
+
+plot(avg_day_inflammation) 
+
+min_day_inflammation<-apply(dat,2,min) 
+
+plot(min_day_inflammation) 
+
+
+
+
+SM Analysis:
+
+data(airquality) 
+
+barplot(airquality$Ozone, main = 'Ozone Concenteration in air', xlab = 'ozone levels', horiz = TRUE)
+
+hist(airquality$Temp, main ="La Guardia Airport's Maximum Temperature(Daily)", xlab ="Temperature(Fahrenheit)", xlim = c(50, 125), col ="yellow", freq = TRUE) 
+
+boxplot(airquality$Wind, main = "Average wind speed at La Guardia Airport", xlab = "Miles per hour", ylab = "Wind", col = "orange", border = "brown", horizontal = TRUE, notch = TRUE) 
+
+boxplot(airquality[, 0:4], main ='Box Plots for Air Quality Parameters') 
+
+plot(airquality$Ozone, airquality$Month, main ="Scatterplot Example", xlab ="Ozone Concentration in parts per billion", ylab =" Month of observation ", pch = 19)
